@@ -393,6 +393,52 @@ p { margin: 0 0 1em; }
   .service-detail { grid-template-columns: 1fr; padding: 24px; }
 }
 
+/* ---------- About page ---------- */
+
+.story {
+  max-width: 760px;
+  margin: 0 auto;
+  font-size: 1.08rem;
+}
+.story p { margin-bottom: 1.2em; }
+.story .lead {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: clamp(1.25rem, 2.6vw, 1.5rem);
+  line-height: 1.4;
+  color: var(--purple-dark);
+}
+
+.timeline {
+  list-style: none;
+  margin: 40px 0 0;
+  padding: 0 0 0 28px;
+  border-left: 3px solid var(--line);
+}
+.timeline li { position: relative; margin-bottom: 28px; }
+.timeline li::before {
+  content: "";
+  position: absolute;
+  left: -37px;
+  top: 4px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--orange);
+  border: 3px solid var(--offwhite);
+}
+.timeline li:nth-child(even)::before { background: var(--purple); }
+.timeline h3 { margin-bottom: 4px; }
+.timeline p { color: var(--gray); margin: 0; }
+
+.values {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+.values .card { grid-column: auto; }
+@media (max-width: 860px) { .values { grid-template-columns: minmax(0, 1fr); } }
+
 /* ---------- Contact page ---------- */
 
 .contact-grid {
