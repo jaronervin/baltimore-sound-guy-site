@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@500;600;700;800&family=Permanent+Marker&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/styles.css?v=2">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -46,9 +46,13 @@
 
         <div class="panel">
           <h2 style="font-size:1.5rem">Request a quote</h2>
-          <!-- To receive submissions without the visitor's email app, set data-endpoint
-               to a form service URL (e.g. Formspree or Web3Forms). -->
-          <form id="quote-form" data-endpoint="" novalidate>
+          <!-- Submissions are delivered by Web3Forms to Jay@BaltimoreSoundGuy.com.
+               If access_key is blank, the form falls back to opening the visitor's email app. -->
+          <form id="quote-form" data-endpoint="https://api.web3forms.com/submit" novalidate>
+            <input type="hidden" name="access_key" value="b3fae810-ae31-49ea-93be-68f3c56002c3">
+            <input type="hidden" name="from_name" value="BaltimoreSoundGuy.com">
+            <!-- spam trap: real visitors never see or fill this -->
+            <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
             <div class="form-row">
               <div class="field">
                 <label for="name">Name</label>
@@ -169,6 +173,6 @@
     </div>
   </footer>
 
-  <script src="assets/js/main.js"></script>
+  <script src="assets/js/main.js?v=2"></script>
 </body>
 </html>

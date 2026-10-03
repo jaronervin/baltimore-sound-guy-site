@@ -452,6 +452,7 @@ p { margin: 0 0 1em; }
 @media (max-width: 520px) { .checks { grid-template-columns: 1fr; } }
 
 .form-note { font-size: 0.88rem; color: var(--gray); margin-top: 12px; }
+.hp { position: absolute; left: -9999px; }
 .form-status { margin-top: 14px; font-weight: 600; }
 .form-status.ok { color: #1B7F4B; }
 .form-status.err { color: #B3261E; }

@@ -14,11 +14,12 @@ document.querySelectorAll("[data-year]").forEach((el) => {
 });
 
 // Quote form.
-// If the form has a data-endpoint (e.g. a Formspree or Web3Forms URL), it posts there.
-// Until one is set up, it opens the visitor's email app with everything filled in.
+// Sends through Web3Forms (data-endpoint) when the form has an access_key.
+// Without one, it opens the visitor's email app with everything filled in.
 const form = document.querySelector("#quote-form");
 if (form) {
   const status = form.querySelector(".form-status");
+  const button = form.querySelector('button[type="submit"]');
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -27,23 +28,33 @@ if (form) {
     const data = new FormData(form);
     const services = data.getAll("services").join(", ") || "Not specified";
     const endpoint = form.dataset.endpoint;
+    const accessKey = data.get("access_key");
 
-    if (endpoint) {
+    if (endpoint && accessKey) {
+      // Checkboxes share one name; send them as a single readable line.
+      data.delete("services");
+      data.set("services", services);
+      data.set("subject", `Quote request: ${data.get("event_type") || "Event"} — ${data.get("name")}`);
+
       status.className = "form-status";
       status.textContent = "Sending…";
+      button.disabled = true;
       try {
         const res = await fetch(endpoint, {
           method: "POST",
           headers: { Accept: "application/json" },
           body: data,
         });
-        if (!res.ok) throw new Error(res.statusText);
+        const json = await res.json().catch(() => ({}));
+        if (!res.ok || json.success === false) throw new Error(json.message || res.statusText);
         form.reset();
         status.className = "form-status ok";
         status.textContent = "Thanks! Your request was sent. Jay will get back to you soon.";
       } catch {
         status.className = "form-status err";
         status.textContent = "Something went wrong. Please email Jay@BaltimoreSoundGuy.com directly.";
+      } finally {
+        button.disabled = false;
       }
       return;
     }
